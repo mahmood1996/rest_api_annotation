@@ -14,6 +14,8 @@ typedef OnFailedResponse<ReturnType> = FutureOr<ReturnType> Function(
   Response response,
 );
 
+typedef Encoder<ValueType> = dynamic Function(ValueType value);
+
 class Request {
   const Request({
     required this.method,
@@ -46,10 +48,14 @@ class QueryParametersGroup {
   const QueryParametersGroup();
 }
 
-class Field {
-  const Field(this.key);
+class Field<ValueType> {
+  const Field(
+    this.key, {
+    this.encode,
+  });
 
   final String key;
+  final Encoder<ValueType>? encode;
 }
 
 class Body {
